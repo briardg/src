@@ -54,7 +54,7 @@ public abstract class AbstractMotor implements IMotor {
     //*** methodes effectuant des calcules ***//
 
     public double calculatedAirResistance(){
-        return 1/2*aerodynamicCoefficient*airDensity*surface*(velocity*velocity);
+        return 1/2*aerodynamicCoefficient*airDensity*surface*(velocity*velocity);//>500km/h
     }
 
     //force de frottement plus force de la pense si il y a.
