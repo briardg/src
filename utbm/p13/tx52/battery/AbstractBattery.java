@@ -25,12 +25,12 @@ public abstract class AbstractBattery implements IBattery{
     protected double currentOutPower=0;
 
     //retourne un tableau avec les borne de puissance que la batterie pourra produire par la suite
-    public double[] getRangePower(double power){
-        double powerMin=power-this.ratio;
+    public double[] getRangePower(){
+        double powerMin=this.currentOutPower-this.ratio;
         if(powerMin<0)
             powerMin=0;
 
-        return new double[]{powerMin,power+this.ratio};
+        return new double[]{powerMin,this.currentOutPower+this.ratio};
     }
 
     public double getCurrentCapacity() {
@@ -52,19 +52,26 @@ public abstract class AbstractBattery implements IBattery{
 
     //Puissance utilisé pendant une seconde = 1/3600 heure
     //car l'intensité total donc la puissance total est pour une heure
-    public void setCurrentCapacity(double powerIn, double powerOut) {
-        this.setCurrentCapacity(powerIn-powerOut);
-    }
+    public void setCurrentCapacity(double powerIn) {
 
-    //utilisation de la batterie  sans recharge
-    public void setCurrentCapacity(double powerOut) {
-        this.currentCapacity -=(powerOut/this.voltage)/3600;
+        this.currentCapacity +=(powerIn/this.voltage)/3600;
 
         //test pour ne pas depasser la capacité physique max et min de la batterie
         if (this.currentCapacity>this.totalCapacity)
             this.currentCapacity=this.totalCapacity;
-        else if(this.currentCapacity<10)
-            this.currentCapacity=10;
+        else if(this.currentCapacity<0)
+            this.currentCapacity=0;
+    }
+
+    //utilisation de la batterie  sans recharge
+    public void setCurrentCapacity() {
+         this.currentCapacity -=(this.currentOutPower/this.voltage)/3600;
+
+        //test pour ne pas depasser la capacité physique max et min de la batterie
+        if (this.currentCapacity>this.totalCapacity)
+            this.currentCapacity=this.totalCapacity;
+        else if(this.currentCapacity<0)
+            this.currentCapacity=0;
     }
 
     public void setCurrentOutPower(double currentOutPower){

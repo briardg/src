@@ -6,45 +6,44 @@ package utbm.p13.tx52.motor;
  */
 public class Engine extends AbstractMotor {
 
-    private double tank; //gramme
+    private double tank; //kg
     private double weightOfLiter;
-    private double consumption; // g/kW/h
+    private double consumption; //kg/kW/h
     private double OptimalPower; //KW
     private boolean turnON=false;
 
-    private int efficiency; //efficacité du moteur en %
-
     //tank given in liter
     public Engine(int tank, double weightOfLitter, double consumption, double OptimalPower) {
-        this.tank = weightOfLitter*tank;
+        this.weightOfLiter=weightOfLitter;
+        this.tank = tank*weightOfLitter;
         this.consumption = consumption;
         this.OptimalPower = OptimalPower;
     }
 
     public boolean isTurnON() {
-        return turnON;
+        return this.turnON;
     }
 
     public double getTank(){
-        return tank;
+        return this.tank;
     }
 
+   //watt
     public double getOptimalPower(){
-        return OptimalPower;
+        return this.OptimalPower*1000;
     }
 
     public void setTurnON(boolean turnON) {
         this.turnON = turnON;
     }
 
-
-    public void updateTank(int numberOfSecond){
-        tank-=(consumption*(numberOfSecond/3600))*OptimalPower;
+    public double getWeightOfLiter() {
+        return this.weightOfLiter;
     }
 
 
-    public double consommation(double power){
-        return 1*power/10000;
+    public void updateTank(){
+        this.tank=this.tank-(this.consumption*this.OptimalPower/3600);
     }
 
 }
