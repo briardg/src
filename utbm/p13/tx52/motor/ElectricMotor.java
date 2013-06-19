@@ -22,6 +22,7 @@ public class ElectricMotor extends AbstractMotor {
         this(wheelRadius, surface, aerodynamicCoefficient, weight, frictionCoefficient);
         this.velocity = velocity;
         this.incline = incline;
+        this.initCalculatedValue();
     }
 }
 

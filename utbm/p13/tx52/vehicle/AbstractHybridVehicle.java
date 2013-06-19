@@ -1,5 +1,7 @@
 package utbm.p13.tx52.vehicle;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import utbm.p13.tx52.battery.AbstractBattery;
 import utbm.p13.tx52.motor.ElectricMotor;
 import utbm.p13.tx52.motor.Engine;
@@ -10,6 +12,7 @@ import utbm.p13.tx52.motor.Engine;
  */
 public class AbstractHybridVehicle implements Ivehicle{
 
+    protected String id="Vehicule number"+new SimpleDateFormat("ss").format(new Date());
     protected Engine engine;
     protected AbstractBattery battery;
     protected ElectricMotor electricMotor;

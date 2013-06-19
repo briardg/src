@@ -22,32 +22,60 @@ public abstract class AbstractBattery implements IBattery{
 
     //valeurs calculées
     protected double currentCapacity; //Ah
+    protected double currentOutPower=0;
 
     //retourne un tableau avec les borne de puissance que la batterie pourra produire par la suite
     public double[] getRangePower(double power){
-        return new double[]{power-this.ratio,power+this.ratio};
+        double powerMin=power-this.ratio;
+        if(powerMin<0)
+            powerMin=0;
+
+        return new double[]{powerMin,power+this.ratio};
     }
 
     public double getCurrentCapacity() {
         return currentCapacity;
     }
 
+    public double getTotalCapacity(){
+        return this.totalCapacity;
+    }
+
+    public int getPourcentageOfCharge(){
+        return (int)(this.currentCapacity*100/this.totalCapacity);
+    }
+
+    public double getCurrentOutPower(){
+        return currentOutPower;
+    }
+
+
     //Puissance utilisé pendant une seconde = 1/3600 heure
     //car l'intensité total donc la puissance total est pour une heure
     public void setCurrentCapacity(double powerIn, double powerOut) {
-        this.currentCapacity += ((powerIn-powerOut)/this.voltage)/3600;
+        this.setCurrentCapacity(powerIn-powerOut);
     }
 
-    //utilisation de la batteri sans recharge
+    //utilisation de la batterie  sans recharge
     public void setCurrentCapacity(double powerOut) {
         this.currentCapacity -=(powerOut/this.voltage)/3600;
+
+        //test pour ne pas depasser la capacité physique max et min de la batterie
+        if (this.currentCapacity>this.totalCapacity)
+            this.currentCapacity=this.totalCapacity;
+        else if(this.currentCapacity<10)
+            this.currentCapacity=10;
+    }
+
+    public void setCurrentOutPower(double currentOutPower){
+        this.currentOutPower=currentOutPower;
     }
 
     //la batterie à besoin d'etre recharger si le seul de 30% est passé
     // si la batterie est après 90% c'est bon pas besoin de la recharger
     //si on la rechargai et qu'elle est toujours entre 30% et 90% alors on continu
     // si c'est l'inverse on continu de l'utiliser sans la recharger
-    public boolean isNeedOfEnginePower(){
+    public boolean isNeedOfPower(){
         if(this.currentCapacity>=this.totalCapacity*90/100){
             return isCharging=false;
         }else if(this.currentCapacity<=this.totalCapacity*30/100){

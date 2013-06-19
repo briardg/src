@@ -27,12 +27,28 @@ public abstract class AbstractMotor implements IMotor {
     protected double incline; //angle de pente en degré
 
     //valeur calculer
+    private double airResistance;
+    private double floorResistance;
+    private double angularVelocity;
     private double force; // force de frottement en Newton N
     private double wheelTorque; //couple roue ou moteur N/m
-    private double actualPower;
-
+    private double currentPower; //Watt
+    
+    
 
     //*** getter ***//
+
+    public double getAirResistance(){
+        return this.airResistance;
+    }
+
+    public double getFloorResistance(){
+        return this.floorResistance;
+    }
+
+    public double getAngularVelocity(){
+        return this.angularVelocity;
+    }
 
     public double getForce(){
         return force;
@@ -42,53 +58,76 @@ public abstract class AbstractMotor implements IMotor {
         return wheelTorque;
     }
 
-    public double getActualPower(){
-        return this.actualPower;
+    public double getCurrentPower(){
+        return this.currentPower;
     }
 
     //*** setter modification venant d'une autre class ***//
 
     public void setVelocity(int velocity) {
         this.velocity = velocity;
+        this.calculateAirResistance();
+        this.calculateAngularVelocity();
+        this.calculateForce();
+        this.calculateWheelTorque();
+        this.calculatedPower();
     }
 
     public void setIncline(double incline) {
         this.incline = incline;
+        this.calculateFloorResistance();
+        this.calculateForce();
+        this.calculateWheelTorque();
+        this.calculatedPower();
     }
+
 
     //*** methodes effectuant des calcules ***//
 
-    public double calculatedAirResistance(){
-        return 1/2*aerodynamicCoefficient*airDensity*surface*(velocity*velocity);//>500km/h
+    public void calculateAirResistance(){
+        this.airResistance= 1/2*this.aerodynamicCoefficient*this.airDensity*this.surface*(this.velocity);
     }
 
-    //force de frottement plus force de la pense si il y a.
-    public double calculatedFloorResistance(){
+    //force angulaire
+    public void calculateAngularVelocity(){
+        this.angularVelocity=this.velocity/this.wheelRadius;
+    }
+
+    //force de frottement plus force de la pente si il y a.
+    public void calculateFloorResistance(){
+
         //en monté
-        if(incline>=0)
-            return ((weight*G)*(1-Math.cos(Math.toRadians(incline))+frictionCoefficient));
+        if(this.incline>=0)
+           this.floorResistance = (this.weight*G) - (this.weight*G)*(Math.cos(Math.toRadians(this.incline)))+(this.weight*G)*(Math.cos(Math.toRadians(this.incline)))*(this.frictionCoefficient);
         //descente
         else
-            return ((weight*G)*(-1+Math.cos(Math.toRadians(incline))+frictionCoefficient));
+           this.floorResistance = -((this.weight*G) - (this.weight*G)*(Math.cos(Math.toRadians(this.incline))))+(this.weight*G)*(Math.cos(Math.toRadians(this.incline)))*(this.frictionCoefficient);
 
     }
 
     //retourne le total des force de frottement
-    public double calculatedForce(){
-        return force=calculatedAirResistance()+calculatedFloorResistance();
+    public void calculateForce(){
+       this.force=this.airResistance+this.floorResistance;
     }
 
-    public double calculatedWheelTorque(){
-        return wheelTorque=wheelRadius*calculatedForce();
-    }
-
-    public double calculatedAngularVelocity(){
-        return velocity/wheelRadius;
+    public void calculateWheelTorque(){
+        this.wheelTorque=this.wheelRadius*this.force;
     }
 
     //Power en Watt
-    public double calculatedPower(){
-        return this.actualPower=calculatedAngularVelocity()*calculatedWheelTorque();
+    public void calculatedPower(){
+        this.currentPower=this.angularVelocity*this.wheelTorque;
+    }
+
+    //calcule des différentes composante de la puissance
+    //la mise à jour se fera pas la MaJ de la vitesse ou de l'inclinaison
+    public void initCalculatedValue(){
+        this.calculateAirResistance();
+        this.calculateAngularVelocity();
+        this.calculateFloorResistance();
+        this.calculateForce();
+        this.calculateWheelTorque();
+        this.calculatedPower();
     }
 
 }
