@@ -6,25 +6,25 @@ package utbm.p13.tx52.battery;
  */
 public abstract class AbstractBattery implements IBattery{
 
-    //données de base
+    //basic data
     protected boolean isCharging=false;
-    protected double voltage; //tension nominale volt
+    protected double voltage; //volt
     protected double totalCapacity; //Ah
-    protected double ratio; //difference entre puissance et la puissance pour le cycle suivant p(t+1)=p(t)+ratio
+    protected double ratio; // difference between actual power and next needed power p(t+1)=p(t)+ratio
 
-    protected double energyByWeight; //Wh/kg
+    protected double energyByWeight; // Wh/kg
 
-    protected double efficiency; // rendement de la batterie out=%in
+    protected double efficiency; // efficiency de la batterie out=%in
 
-    //valeurs calculées via données de base
+    //calculated values from the basic data 
     protected double minCapacity; //Ah
     protected double instantPower; // value * C (0,33C ou 1C ou 1,5C)
 
-    //valeurs calculées
+    //calculated values
     protected double currentCapacity; //Ah
     protected double currentOutPower=0;
 
-    //retourne un tableau avec les borne de puissance que la batterie pourra produire par la suite
+    // return array with power limit than the battery will be able to produce at the next step 
     public double[] getRangePower(){
         double powerMin=this.currentOutPower-this.ratio;
         if(powerMin<0)
@@ -50,8 +50,8 @@ public abstract class AbstractBattery implements IBattery{
     }
 
 
-    //Puissance utilisé pendant une seconde = 1/3600 heure
-    //car l'intensité total donc la puissance total est pour une heure
+    //Power used during one second  = 1/3600 hour
+    //because the total intensity, so the total power, is for one hour
     public void setCurrentCapacity(double powerIn) {
 
         this.currentCapacity +=(powerIn/this.voltage)/3600;
@@ -63,7 +63,7 @@ public abstract class AbstractBattery implements IBattery{
             this.currentCapacity=0;
     }
 
-    //utilisation de la batterie  sans recharge
+    //Utilization of the battery without recharge
     public void setCurrentCapacity() {
          this.currentCapacity -=(this.currentOutPower/this.voltage)/3600;
 
@@ -78,10 +78,10 @@ public abstract class AbstractBattery implements IBattery{
         this.currentOutPower=currentOutPower;
     }
 
-    //la batterie à besoin d'etre recharger si le seul de 30% est passé
-    // si la batterie est après 90% c'est bon pas besoin de la recharger
-    //si on la rechargai et qu'elle est toujours entre 30% et 90% alors on continu
-    // si c'est l'inverse on continu de l'utiliser sans la recharger
+    //The battery need to be recharge under 30%
+    //If the battery level is after 90% no need to recharge anymore
+    //If we was recharging and the level is still betwwen 30% and 90% so we still continu recharging
+    //if it's th opposite still using the battery but without recharging.
     public boolean isNeedOfPower(){
         if(this.currentCapacity>=this.totalCapacity*90/100){
             return isCharging=false;

@@ -35,7 +35,7 @@ public class AbstractHybridVehicle implements Ivehicle{
     private double extraPower=0;
     private double missingPower=0;
 
-    //Représentation of vehicle data by Graph
+    //Representation of vehicle data by Graph
 
     private JFreeChart chartBattery;
     private XYSeriesCollection datasetBattery = new XYSeriesCollection();

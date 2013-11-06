@@ -87,7 +87,7 @@ public class Tx52 extends TimerTask{
         this.v3.updateGraph(nbBoucle,this.inclines.get(2));
 
 
-        //pseudo communication inter-vehicule
+        //pseudo communication betwwen vehicle
         this.extraPower=this.v1.getExtraPower()+this.v2.getExtraPower()+this.v3.getExtraPower();
         System.out.println("***********"+extraPower);
         if(this.v1.getMissingPower()>0){
@@ -127,7 +127,7 @@ public class Tx52 extends TimerTask{
         nbBoucle++;
     }
 
-    //generation d'un nouvel angle du chemin
+    //new Angle of the path
     public int getNewIncline(int previousIncline){
         int[] i = new int[3];
         i[0]=-30;

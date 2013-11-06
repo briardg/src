@@ -7,7 +7,7 @@ package utbm.p13.tx52.motor;
  */
 public class ElectricMotor extends AbstractMotor {
 
-    //constructeur basique information
+    //contructor with basic data
     public ElectricMotor(double wheelRadius, double surface, double aerodynamicCoefficient, double weight, double frictionCoefficient) {
         super();
         this.wheelRadius = wheelRadius;
@@ -17,7 +17,7 @@ public class ElectricMotor extends AbstractMotor {
         this.frictionCoefficient = frictionCoefficient;
     }
 
-    //constructeur basique plus specification
+    //basic constructor + specification
     public ElectricMotor(double wheelRadius, double surface, double aerodynamicCoefficient, double weight, double frictionCoefficient, int velocity, double incline) {
         this(wheelRadius, surface, aerodynamicCoefficient, weight, frictionCoefficient);
         this.velocity = velocity;
