@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package utbm.p13.tx52;
 
 import utbm.p13.tx52.connection.ClientSocketReceiver;
