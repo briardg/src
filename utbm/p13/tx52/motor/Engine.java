@@ -41,7 +41,7 @@ public class Engine extends AbstractMotor {
         return this.weightOfLiter;
     }
 
-
+  
     public void updateTank(){
         this.tank=this.tank-(this.consumption*this.OptimalPower/3600);
     }
