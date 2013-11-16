@@ -92,6 +92,6 @@ public abstract class AbstractBattery implements IBattery{
         }
     }
 
-//cooment 
+
 
 }
