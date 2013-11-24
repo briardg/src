@@ -11,8 +11,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import utbm.p13.tx52.vehicle.SeriesHybridVehicule;
-import utbm.p13.tx52.view.Battery;
+import utbm.p13.tx52.vehicle.SeriesHybridVehicle;
+
 
 /**
  *
@@ -20,11 +20,10 @@ import utbm.p13.tx52.view.Battery;
  */
 public class Tx52 extends TimerTask{
 
-    SeriesHybridVehicule v1 = new SeriesHybridVehicule();
-    SeriesHybridVehicule v2 = new SeriesHybridVehicule();
-    SeriesHybridVehicule v3 = new SeriesHybridVehicule();
+    SeriesHybridVehicle v1 = new SeriesHybridVehicle();
+    SeriesHybridVehicle v2 = new SeriesHybridVehicle();
+    SeriesHybridVehicle v3 = new SeriesHybridVehicle();
     LinkedList<Integer> inclines= new LinkedList<Integer>();
-    Battery b= new Battery();
 
 
     JFrame JFIncline = new JFrame("Incline");
