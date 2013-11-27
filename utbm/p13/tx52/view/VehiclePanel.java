@@ -1,23 +1,25 @@
 package utbm.p13.tx52.view;
 
 import java.awt.GridLayout;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import utbm.p13.tx52.vehicle.AbstractHybridVehicle;
 
 /**
  *
  * @author Gaut
  */
-public class VehiclePanel extends JPanel {
+public class VehiclePanel extends JPanel implements Iview{
 
-        //Representation of vehicle data by Graph
+    private AbstractHybridVehicle v;
+    
+    
+    //Representation of vehicle data by Graph
 
     private JFreeChart chartBattery;
     private XYSeriesCollection datasetBattery = new XYSeriesCollection();
@@ -35,13 +37,20 @@ public class VehiclePanel extends JPanel {
     private XYSeries seriesTank = new XYSeries("Tank");
     
     
+    
     public VehiclePanel(){
         super(new GridLayout(0,1));
-        
-        build();
+        this.build();
     }
     
-    private void build(){
+    public VehiclePanel(AbstractHybridVehicle v){
+        super(new GridLayout(0,1));
+        this.v=v;
+        this.build();
+    }
+    
+    @Override
+    public void build(){
         
 
         // Add the series to your data set
@@ -94,6 +103,10 @@ public class VehiclePanel extends JPanel {
 
         this.add(new ChartPanel(chartTank));
         
-        
+    }
+    
+    @Override
+    public void update(){
+        System.out.println("Update");
     }
 }
