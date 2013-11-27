@@ -18,7 +18,7 @@ public abstract class AbstractBattery implements IBattery{
 
     //calculated values from the basic data 
     protected double minCapacity; //Ah
-    protected double instantPower; // value * C (0,33C ou 1C ou 1,5C)
+    protected double instantPower; // value * C (0,33C or 1C or 1,5C)
 
     //calculated values
     protected double currentCapacity; //Ah
