@@ -144,6 +144,6 @@ public class Tx52 extends TimerTask{
     
     public static void main(String[] args) {
         Timer t = new Timer("TX52");
-        t.schedule(new Tx52(),0,1);
+        t.schedule(new Tx52(),0,1000);
     }
 }

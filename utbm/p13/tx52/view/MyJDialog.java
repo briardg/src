@@ -18,8 +18,10 @@ public class MyJDialog extends JDialog implements Iview{
     private JFreeChart chart;
     private XYSeriesCollection dataset = new XYSeriesCollection();
     private XYSeries series; 
+    private String titleOfGraphe="";
     
     public MyJDialog(String titleOfGraphe) {
+        this.titleOfGraphe=titleOfGraphe;
         this.series = new XYSeries(titleOfGraphe);
         this.build();
     }
@@ -31,9 +33,9 @@ public class MyJDialog extends JDialog implements Iview{
         dataset.addSeries(series);
         // Generate the graph
         chart = ChartFactory.createXYLineChart(
-        "Incline", // Title
+        this.titleOfGraphe, // Title
         "Time in second", // x-axis Label
-        "Incline", // y-axis Label
+        this.titleOfGraphe, // y-axis Label
         dataset, // Dataset
         PlotOrientation.VERTICAL, // Plot Orientation
         true, // Show Legend

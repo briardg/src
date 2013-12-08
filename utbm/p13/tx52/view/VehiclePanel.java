@@ -108,5 +108,8 @@ public class VehiclePanel extends JPanel implements Iview{
     @Override
     public void update(){
         System.out.println("Update");
+        this.seriesBattery.add(this.seriesBattery.getItemCount(), this.v.getBattery().getPourcentageOfCharge());
+        this.seriesTank.add(this.seriesTank.getItemCount(), this.v.getEngine().getTank());
+        this.seriesPowerEM.add(this.seriesPowerEM.getItemCount(), this.v.getElectricMotor().getCurrentPower());
     }
 }

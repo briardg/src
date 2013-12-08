@@ -29,8 +29,8 @@ public class MainFrame extends JFrame implements Iview{
     @Override
     public void build(){
         
-        for(int i=1; i<=vehicles.size(); i++){
-            this.vehicleTabsPanel.addTab("Vehicle n°"+i,null,new VehiclePanel(vehicles.get(i)),null);
+        for(int i=0; i<vehicles.size(); i++){
+            this.vehicleTabsPanel.addTab("Vehicle n°"+(i+1),null,new VehiclePanel(vehicles.get(i)),null);
         }
         this.vehicleTabsPanel.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         

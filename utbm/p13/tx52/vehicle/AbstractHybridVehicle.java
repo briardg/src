@@ -1,5 +1,6 @@
 package utbm.p13.tx52.vehicle;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -32,24 +33,6 @@ public class AbstractHybridVehicle implements Ivehicle{
     //power made in extra or missing (need engine or other vehicule)
     private double extraPower=0;
     private double missingPower=0;
-
-    //Representation of vehicle data by Graph
-
-    private JFreeChart chartBattery;
-    private XYSeriesCollection datasetBattery = new XYSeriesCollection();
-    private XYSeries seriesBattery = new XYSeries("Battery");
-
-
-    private JFreeChart chartPowerEM;
-    private XYSeriesCollection datasetPowerEM = new XYSeriesCollection();
-    private XYSeries seriesPowerEM = new XYSeries("PowerEM");
-    private XYSeries seriesAveragePowerEM = new XYSeries("Average PowerEM");
-    private double averageOfPower=0;
-
-    private JFreeChart chartTank;
-    private XYSeriesCollection datasetTank = new XYSeriesCollection();
-    private XYSeries seriesTank = new XYSeries("Tank");
-
 
     public AbstractBattery getBattery() {
         return battery;
@@ -91,76 +74,19 @@ public class AbstractHybridVehicle implements Ivehicle{
         this.missingPower = missingPower;
     }
 
-    public void initGraph(int incline){
-        JPanel panel= new JPanel(new GridLayout(0,1));
-
-        // Add the series to your data set
-        datasetBattery.addSeries(seriesBattery);
-        // Generate the graph
-        chartBattery = ChartFactory.createXYLineChart(
-        "Battery", // Title
-        "Time in second", // x-axis Label
-        "Power in %", // y-axis Label
-        datasetBattery, // Dataset
-        PlotOrientation.VERTICAL, // Plot Orientation
-        true, // Show Legend
-        true, // Use tooltips
-        false // Configure chart to generate URLs?
-        );
-
-        panel.add(new ChartPanel(chartBattery));
-
-
-        // Add the series to your data set
-        datasetPowerEM.addSeries(seriesPowerEM);
-        datasetPowerEM.addSeries(seriesAveragePowerEM);
-        // Generate the graph
-        chartPowerEM = ChartFactory.createXYLineChart(
-        "Power EM", // Title
-        "Time in second", // x-axis Label
-        "Power in kW", // y-axis Label
-        datasetPowerEM, // Dataset
-        PlotOrientation.VERTICAL, // Plot Orientation
-        true, // Show Legend
-        true, // Use tooltips
-        false // Configure chart to generate URLs?
-        );
-
-        panel.add(new ChartPanel(chartPowerEM));
-
-        // Add the series to your data set
-        datasetTank.addSeries(seriesTank);
-        // Generate the graph
-        chartTank = ChartFactory.createXYLineChart(
-        "Tank Quantity", // Title
-        "Time in second", // x-axis Label
-        "Tank Quantity in Liter", // y-axis Label
-        datasetTank, // Dataset
-        PlotOrientation.VERTICAL, // Plot Orientation
-        true, // Show Legend
-        true, // Use tooltips
-        false // Configure chart to generate URLs?
-        );
-
-        panel.add(new ChartPanel(chartTank));
-
-        JFrame mainFrame= new JFrame(id);
-        mainFrame.add(new JScrollPane(panel));
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.pack();
-        mainFrame.setVisible(true);
-    }
-
     public void updateGraph(int nbBoucle,int incline){
         //new incline
         this.electricMotor.setIncline(incline);
 
         //ElectricMotor
-        this.seriesPowerEM.addOrUpdate(nbBoucle, this.electricMotor.getCurrentPower());
-        this.averageOfPower=((this.averageOfPower*nbBoucle)+this.electricMotor.getCurrentPower())/(nbBoucle+1);
-        this.seriesAveragePowerEM.addOrUpdate(nbBoucle,averageOfPower );
+        //this.seriesPowerEM.addOrUpdate(nbBoucle, this.electricMotor.getCurrentPower());
+        
+        //TODO
+//        this.averageOfPower=((this.averageOfPower*nbBoucle)+this.electricMotor.getCurrentPower())/(nbBoucle+1);
+//        this.seriesAveragePowerEM.addOrUpdate(nbBoucle,averageOfPower );
+       
         System.out.println("Power needs for ElecMOtor: "+this.electricMotor.getCurrentPower());
-        System.out.println("Average Power:"+this.averageOfPower);
+     //   System.out.println("Average Power:"+this.averageOfPower);
 
         //Battery
         this.rangOfPower=this.battery.getRangePower();
@@ -216,11 +142,11 @@ public class AbstractHybridVehicle implements Ivehicle{
         
 
         System.out.println("Battery current capacity: -->"+this.battery.getCurrentCapacity()+" Ah ="+this.battery.getPourcentageOfCharge()+"%");
-        this.seriesBattery.addOrUpdate(nbBoucle, this.battery.getPourcentageOfCharge());
+   //     this.seriesBattery.addOrUpdate(nbBoucle, this.battery.getPourcentageOfCharge());
 
         //engine update graph
         this.engine.setTurnON(false);
-        this.seriesTank.addOrUpdate(nbBoucle, this.engine.getTank()/this.engine.getWeightOfLiter());
+    //    this.seriesTank.addOrUpdate(nbBoucle, this.engine.getTank()/this.engine.getWeightOfLiter());
 
 
 
