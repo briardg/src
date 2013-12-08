@@ -51,11 +51,13 @@ public class MyJDialog extends JDialog implements Iview{
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.pack();
     }
+    
+    public void addValue(double y){
+        this.series.addOrUpdate(this.series.getItemCount(), y);
+    }
 
     @Override
-    public void update() {
-    
-    }
+    public void update() {}
     
     
     

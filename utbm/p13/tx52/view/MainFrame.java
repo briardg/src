@@ -46,6 +46,7 @@ public class MainFrame extends JFrame implements Iview{
 
     @Override
     public void update() {
+        this.torqueJD.addValue(this.vehicles.get(0).getReceiver().getTorque());
         for(int i=0; i<this.vehicleTabsPanel.getTabCount();i++){
             ((VehiclePanel)this.vehicleTabsPanel.getComponentAt(i)).update();
         }

@@ -1,5 +1,6 @@
 package utbm.p13.tx52.view;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -107,9 +108,11 @@ public class VehiclePanel extends JPanel implements Iview{
     
     @Override
     public void update(){
-        System.out.println("Update");
         this.seriesBattery.add(this.seriesBattery.getItemCount(), this.v.getBattery().getPourcentageOfCharge());
         this.seriesTank.add(this.seriesTank.getItemCount(), this.v.getEngine().getTank());
         this.seriesPowerEM.add(this.seriesPowerEM.getItemCount(), this.v.getElectricMotor().getCurrentPower());
+        //TODO : checked for average usefull or not
+        //this.averageOfPower=((this.averageOfPower*nbBoucle)+this.electricMotor.getCurrentPower())/(nbBoucle+1);
+        //this.seriesAveragePowerEM.addOrUpdate(nbBoucle,averageOfPower );
     }
 }

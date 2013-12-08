@@ -78,14 +78,14 @@ public abstract class AbstractBattery implements IBattery{
         this.currentOutPower=currentOutPower;
     }
 
-    //The battery need to be recharge under 30%
-    //If the battery level is after 90% no need to recharge anymore
-    //If we was recharging and the level is still betwwen 30% and 90% so we still continu recharging
+    //The battery need to be recharge under 15%
+    //If the battery level is after 98% no need to recharge anymore
+    //If we was recharging and the level is still betwwen 98% and 15% so we still continu recharging
     //if it's th opposite still using the battery but without recharging.
     public boolean isNeedOfPower(){
-        if(this.currentCapacity>=this.totalCapacity*90/100){
+        if(this.currentCapacity>=this.totalCapacity*98/100){
             return isCharging=false;
-        }else if(this.currentCapacity<=this.totalCapacity*30/100){
+        }else if(this.currentCapacity<=this.totalCapacity*15/100){
             return isCharging=true;
         }else{
             return isCharging;

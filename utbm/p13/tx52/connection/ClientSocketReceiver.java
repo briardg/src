@@ -12,19 +12,23 @@ import java.net.UnknownHostException;
  */
 public class ClientSocketReceiver extends AbstractClientSocket{
     
-    public ClientSocketReceiver(int port) {
+    public ClientSocketReceiver(String adr, int port) {
+        this.adr=adr;
         this.port=port;
+    }
+    public ClientSocketReceiver(int port) {
+        this("127.0.0.1",port);
     }
     
     @Override
     public void run() {
         while(true){
             try{
-                socket = new Socket("127.0.0.1", port);
+                socket = new Socket(this.adr, port);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String s = in.readLine();
                 if(s!=null){
-                   System.out.println("port:"+port+" torque:"+s);
+                   this.torque=Double.valueOf(s);
                 }
                 socket.close();
 
