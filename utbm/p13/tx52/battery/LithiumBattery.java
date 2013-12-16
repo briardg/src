@@ -6,7 +6,7 @@ package utbm.p13.tx52.battery;
  */
 public class LithiumBattery extends AbstractBattery {
 
-    public LithiumBattery(){}
+    
     public LithiumBattery(double voltage,double totalCapacity){
         this.voltage=voltage;
         this.totalCapacity=totalCapacity;

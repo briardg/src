@@ -48,7 +48,7 @@ public class SeriesHybridVehicle extends AbstractHybridVehicle {
             }
         
         /******************* end ****************************/
-        this.battery.setCurrentCapacity();
+        this.battery.setCurrentCapacityByUsing(this.electricMotor.getCurrentPower());
          
 
         
@@ -76,7 +76,7 @@ public class SeriesHybridVehicle extends AbstractHybridVehicle {
             //reduce capacity from tank
             this.engine.updateTank();
             //recharge battery
-            this.battery.setCurrentCapacity(this.engine.getOptimalPower());
+            this.battery.setCurrentCapacityByCharging(this.engine.getOptimalPower());
         }else{
             this.engine.setTurnON(false);
         }

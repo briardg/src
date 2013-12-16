@@ -6,15 +6,16 @@ package utbm.p13.tx52.battery;
  */
 public abstract class AbstractBattery implements IBattery{
 
+    //constante
+    static final protected double batteryEfficiencyCharging = 0.95;
+    static final protected double batteryEfficiencyNotCharging = 0.90;
     //basic data
     protected boolean isCharging=false;
     protected double voltage; //volt
     protected double totalCapacity; //Ah
     protected double ratio; // difference between actual power and next needed power p(t+1)=p(t)+ratio
 
-    protected double energyByWeight; // Wh/kg
-
-    protected double efficiency; // efficiency de la batterie out=%in
+    protected double energyByWeight; // Wh/kg 
 
     //calculated values from the basic data 
     protected double minCapacity; //Ah
@@ -29,8 +30,13 @@ public abstract class AbstractBattery implements IBattery{
         double powerMin=this.currentOutPower-this.ratio;
         if(powerMin<0)
             powerMin=0;
+        
+        double powerMax=this.currentOutPower+this.ratio;
+        if(powerMax >= 5 * this.totalCapacity){
+            powerMax = 5 * this.totalCapacity;
+        }
 
-        return new double[]{powerMin,this.currentOutPower+this.ratio};
+        return new double[]{powerMin,powerMax};
     }
 
     public double getCurrentCapacity() {
@@ -52,27 +58,41 @@ public abstract class AbstractBattery implements IBattery{
 
     //Power used during one second  = 1/3600 hour
     //because the total intensity, so the total power, is for one hour
-    public void setCurrentCapacity(double powerIn) {
+    /**
+     *
+     * @param power power in (positive) or out (negative)
+     */
+    private void setCurrentCapacity(double power) {
+        
+        this.currentCapacity +=(power/this.voltage)/3600;
 
-        this.currentCapacity +=(powerIn/this.voltage)/3600;
-
-        //test pour ne pas depasser la capacité physique max et min de la batterie
+        //test for not going over the max capacity or under 0;
         if (this.currentCapacity>this.totalCapacity)
             this.currentCapacity=this.totalCapacity;
         else if(this.currentCapacity<0)
             this.currentCapacity=0;
     }
-
-    //Utilization of the battery without recharge
-    public void setCurrentCapacity() {
-         this.currentCapacity -=(this.currentOutPower/this.voltage)/3600;
-
-        //test pour ne pas depasser la capacité physique max et min de la batterie
-        if (this.currentCapacity>this.totalCapacity)
-            this.currentCapacity=this.totalCapacity;
-        else if(this.currentCapacity<0)
-            this.currentCapacity=0;
+    
+    public void setCurrentCapacityByCharging(double powerIn){
+        if(this.isCharging)
+            powerIn = powerIn * batteryEfficiencyCharging;
+        else 
+            powerIn = powerIn * batteryEfficiencyNotCharging;
+        
+        this.setCurrentCapacity(0-powerIn);
     }
+    
+    public void setCurrentCapacityByUsing(double powerOut){
+        if(this.isCharging)
+            powerOut = powerOut / batteryEfficiencyCharging;
+        else 
+            powerOut = powerOut / batteryEfficiencyNotCharging;
+        
+        this.setCurrentCapacity(powerOut);
+    }
+    
+    
+
 
     public void setCurrentOutPower(double currentOutPower){
         this.currentOutPower=currentOutPower;

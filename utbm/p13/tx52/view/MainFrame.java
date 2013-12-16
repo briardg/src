@@ -1,9 +1,7 @@
 package utbm.p13.tx52.view;
 
-import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.util.List;
-import javax.swing.JDialog;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
