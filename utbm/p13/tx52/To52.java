@@ -42,9 +42,9 @@ public class To52 extends TimerTask{
     @Override
     public void run() {
         
-        this.v1.update(30);
-        this.v2.update(30);
-        this.v3.update(30);
+        this.v1.update();
+        this.v2.update();
+        this.v3.update();
         
         //update all vehicle graph
         frame.update();
@@ -54,6 +54,6 @@ public class To52 extends TimerTask{
     
     public static void main(String[] args) {
         Timer t = new Timer("TX52");
-        t.schedule(new To52(),0,10);
+        t.schedule(new To52(),0,1);
     }
 }

@@ -70,7 +70,7 @@ public abstract class AbstractMotor implements IMotor {
         this.calculateAngularVelocity();
         this.calculateForce();
         this.calculateWheelTorque();
-        this.calculatedPower();
+        this.calculatePower();
     }
 
     public void setIncline(double incline) {
@@ -78,10 +78,19 @@ public abstract class AbstractMotor implements IMotor {
         this.calculateFloorResistance();
         this.calculateForce();
         this.calculateWheelTorque();
-        this.calculatedPower();
+        this.calculatePower();
+    }    
+
+    public void setAngularVelocity(double angularVelocity) {
+        this.angularVelocity = angularVelocity;
     }
 
+    public void setWheelTorque(double wheelTorque) {
+        this.wheelTorque = wheelTorque;
+    }
 
+    
+    
     //*** methods doing calculation ***//
 
     public void calculateAirResistance(){
@@ -115,7 +124,7 @@ public abstract class AbstractMotor implements IMotor {
     }
 
     //Power in Watt
-    public void calculatedPower(){
+    public void calculatePower(){
         this.currentPower=this.angularVelocity*this.wheelTorque;
     }
 
@@ -127,9 +136,14 @@ public abstract class AbstractMotor implements IMotor {
         this.calculateFloorResistance();
         this.calculateForce();
         this.calculateWheelTorque();
-        this.calculatedPower();
+        this.calculatePower();
     }
     
-    //TODO:calculate from torque and that work with the speed and the whellradisu
-
+    //calculate from torque and that work with the speed and the whellradius
+    public void calculatePowerFromAngularVelocityAndTorque(double av, double t){
+        this.setAngularVelocity(av);
+        this.setWheelTorque(t);
+        this.calculatePower();
+        
+    }
 }

@@ -1,6 +1,5 @@
 package utbm.p13.tx52.view;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;

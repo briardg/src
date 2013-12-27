@@ -6,15 +6,20 @@ package utbm.p13.tx52.battery;
  */
 public abstract class AbstractBattery implements IBattery{
 
-    //constante
+    //basic data
+    //constant for all classes
     static final protected double batteryEfficiencyCharging = 0.95;
     static final protected double batteryEfficiencyNotCharging = 0.90;
-    //basic data
-    protected boolean isCharging=false;
+    //constant
+    protected double coefficientOfCharge;
+    protected double coefficientOfDischarge;
+    
     protected double voltage; //volt
     protected double totalCapacity; //Ah
-    protected double ratio; // difference between actual power and next needed power p(t+1)=p(t)+ratio
-
+    protected double ratio; //watt  difference between actual power and next needed power p(t+1)=p(t)+/-ratio
+    
+    protected boolean isCharging=false;
+    
     protected double energyByWeight; // Wh/kg 
 
     //calculated values from the basic data 
@@ -27,11 +32,11 @@ public abstract class AbstractBattery implements IBattery{
 
     // return array with power limit than the battery will be able to produce at the next step 
     public double[] getRangePower(){
-        double powerMin=this.currentOutPower-this.ratio;
+        double powerMin=this.currentOutPower-(this.ratio*this.voltage);
         if(powerMin<0)
             powerMin=0;
         
-        double powerMax=this.currentOutPower+this.ratio;
+        double powerMax=this.currentOutPower+(this.ratio*this.voltage);
         if(powerMax >= 5 * this.totalCapacity){
             powerMax = 5 * this.totalCapacity;
         }
@@ -54,6 +59,21 @@ public abstract class AbstractBattery implements IBattery{
     public double getCurrentOutPower(){
         return currentOutPower;
     }
+
+    public double getCoefficientOfCharge() {
+        return coefficientOfCharge;
+    }
+
+    public double getCoefficientOfDischarge() {
+        return coefficientOfDischarge;
+    }
+
+    public double getVoltage() {
+        return voltage;
+    }
+    
+    
+    
 
 
     //Power used during one second  = 1/3600 hour
@@ -79,7 +99,7 @@ public abstract class AbstractBattery implements IBattery{
         else 
             powerIn = powerIn * batteryEfficiencyNotCharging;
         
-        this.setCurrentCapacity(0-powerIn);
+        this.setCurrentCapacity(powerIn);
     }
     
     public void setCurrentCapacityByUsing(double powerOut){
@@ -88,7 +108,7 @@ public abstract class AbstractBattery implements IBattery{
         else 
             powerOut = powerOut / batteryEfficiencyNotCharging;
         
-        this.setCurrentCapacity(powerOut);
+        this.setCurrentCapacity(0-powerOut);
     }
     
     
@@ -112,6 +132,12 @@ public abstract class AbstractBattery implements IBattery{
         }
     }
 
+    public double getMaxChargePower() {
+        return this.totalCapacity*this.coefficientOfCharge*this.voltage;
+    }
 
+    public double getMaxDisChargePower() {
+        return this.totalCapacity*this.coefficientOfDischarge*this.voltage;
+    }
 
 }

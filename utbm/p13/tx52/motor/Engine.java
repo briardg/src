@@ -19,6 +19,10 @@ public class Engine extends AbstractMotor {
         this.consumption = consumption;
         this.OptimalPower = OptimalPower;
     }
+    
+     public Engine(int tank, double consumption, double OptimalPower) {
+        this(tank,1,consumption,OptimalPower);
+    }
 
     public boolean isTurnON() {
         return this.turnON;
@@ -44,6 +48,7 @@ public class Engine extends AbstractMotor {
   
     public void updateTank(){
         this.tank=this.tank-(this.consumption*this.OptimalPower/3600);
+        System.out.println("update tank:"+this.tank);
     }
 
 }

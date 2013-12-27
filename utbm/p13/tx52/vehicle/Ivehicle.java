@@ -6,5 +6,5 @@ package utbm.p13.tx52.vehicle;
  */
 public interface Ivehicle {
 
-    public void update(double torque);
+    public void update();
 }

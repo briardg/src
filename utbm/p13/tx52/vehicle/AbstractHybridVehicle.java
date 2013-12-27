@@ -15,7 +15,6 @@ public abstract class AbstractHybridVehicle implements Ivehicle{
     protected Engine engine;
     protected AbstractBattery battery;
     protected ElectricMotor electricMotor;
-    protected double torque;
    
     protected ClientSocketReceiver receiver;
     protected ClientSocketSender sender;
@@ -29,10 +28,8 @@ public abstract class AbstractHybridVehicle implements Ivehicle{
 
   
     @Override
-    public void update(double torque){
-        this.torque=this.receiver.getTorque();
-        //calculate new needed power from new torque
-        this.electricMotor.setIncline(this.torque);
+    public void update(){
+        this.electricMotor.calculatePowerFromAngularVelocityAndTorque(this.receiver.getAngularVelocity(), this.receiver.getTorque());
     }
     
     
@@ -77,6 +74,9 @@ public abstract class AbstractHybridVehicle implements Ivehicle{
     }
     
     
+    public void setSenderTorque(double torque){
+        this.sender.setTorque(torque);
+    }
     
     public double getExtraPower() {
         return extraPower;

@@ -24,11 +24,15 @@ public class ClientSocketSender extends AbstractClientSocket{
         while(true){
             try{
                 socket = new Socket(this.adr, port);
-                System.out.println("port:"+port);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), false);
-                out.print("@"+this.torque+"#");
+                if(this.torque==Double.NaN){
+                    System.out.println("$$$$$$$$$$$$$$$$$NAN");
+                    this.torque=0.0;
+                }
+                    out.print("@"+this.torque+"#");
                 out.flush();
                 socket.close();
+                System.out.println(Double.toString(this.torque*100)+"sender("+this.port+"): @"+this.torque+"#");
 
             } catch (UnknownHostException e) {
                 System.out.println(e);

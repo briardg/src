@@ -12,6 +12,8 @@ import java.net.UnknownHostException;
  */
 public class ClientSocketReceiver extends AbstractClientSocket{
     
+    private double angularVelocity=0;
+    
     public ClientSocketReceiver(String adr, int port) {
         this.adr=adr;
         this.port=port;
@@ -19,6 +21,11 @@ public class ClientSocketReceiver extends AbstractClientSocket{
     public ClientSocketReceiver(int port) {
         this("127.0.0.1",port);
     }
+
+    public double getAngularVelocity() {
+        return angularVelocity;
+    }
+    
     
     @Override
     public void run() {
@@ -28,8 +35,11 @@ public class ClientSocketReceiver extends AbstractClientSocket{
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String s = in.readLine();
                 if(s!=null){
-                   this.torque=Double.valueOf(s);
+                   String[] split = s.split("#");
+                   this.angularVelocity=Double.valueOf(split[0]);
+                   this.torque=Double.valueOf(split[1]);
                 }
+                System.out.println(this.port+" : "+s );
                 socket.close();
 
             } catch (UnknownHostException e) {

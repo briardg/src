@@ -11,18 +11,16 @@ import utbm.p13.tx52.motor.Engine;
 public class SeriesHybridVehicle extends AbstractHybridVehicle {
 
     public SeriesHybridVehicle() {
-        this.engine=new Engine(60,0.75,0.195,200);
-        this.battery=new LithiumBattery(12,1000);
+        this.engine=new Engine(60,0.75,0.195,2);
+        this.battery=new LithiumBattery(12,138);
         this.electricMotor=new ElectricMotor(0.5, 2, 0.5, 1000, 0.04, 14,0);
     }
 
     @Override
-    public void update(double torque) {
-        super.update(torque);
+    public void update() {
+        super.update();
         
         //TODO : ask again for that
-        //reduse capacity from battery
-        this.battery.setCurrentOutPower(this.electricMotor.getCurrentPower());
         /************** Range calculation ****************/
         /*
          
@@ -48,6 +46,10 @@ public class SeriesHybridVehicle extends AbstractHybridVehicle {
             }
         
         /******************* end ****************************/
+        this.battery.setCurrentOutPower(this.electricMotor.getCurrentPower());
+        if(this.electricMotor.getCurrentPower()>this.battery.getMaxDisChargePower())
+            this.battery.setCurrentOutPower(this.battery.getMaxDisChargePower());
+        System.out.println("Power:"+this.electricMotor.getCurrentPower());
         this.battery.setCurrentCapacityByUsing(this.electricMotor.getCurrentPower());
          
 
@@ -80,6 +82,11 @@ public class SeriesHybridVehicle extends AbstractHybridVehicle {
         }else{
             this.engine.setTurnON(false);
         }
+        
+        if(this.electricMotor.getCurrentPower()!=0.0)
+            this.sender.setTorque(this.electricMotor.getCurrentPower()/this.electricMotor.getAngularVelocity());
+        else
+            this.sender.setTorque(0.0);
             
  }
     
