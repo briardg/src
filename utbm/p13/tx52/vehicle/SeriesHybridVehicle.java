@@ -55,7 +55,7 @@ public class SeriesHybridVehicle extends AbstractHybridVehicle {
 
         
         /**********Parallel calculation**********/
-            //if we neeed power we are turn on the engine get the missing power
+            //if we neeed power we are turn on the engine get the missing power 
             // and put the reste in the extra power variable
             /*
             if(missingPower>0){

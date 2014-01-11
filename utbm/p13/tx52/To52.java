@@ -16,21 +16,18 @@ import utbm.p13.tx52.view.MainFrame;
  */
 public class To52 extends TimerTask{
 
-    private SeriesHybridVehicle v1 = new SeriesHybridVehicle();
-    private SeriesHybridVehicle v2 = new SeriesHybridVehicle();
-    private SeriesHybridVehicle v3 = new SeriesHybridVehicle();
     private List<AbstractHybridVehicle> vList = new ArrayList<>();
     
     private Servers servers;
     
     private MainFrame frame ;
     
-    private int nbBoucle=0;
 
     public To52() {
-        this.vList.add(v1);
-        this.vList.add(v2);
-        this.vList.add(v3);
+        
+        for(int i=0;i<4;i++){
+            this.vList.add(new SeriesHybridVehicle());
+        }
         
         this.servers = new Servers(vList);
         this.servers.start();
@@ -42,14 +39,12 @@ public class To52 extends TimerTask{
     @Override
     public void run() {
         
-        this.v1.update();
-        this.v2.update();
-        this.v3.update();
+        for(AbstractHybridVehicle v: this.vList)
+            v.update();
         
         //update all vehicle graph
         frame.update();
-        
-        nbBoucle++;
+
     }
     
     public static void main(String[] args) {
