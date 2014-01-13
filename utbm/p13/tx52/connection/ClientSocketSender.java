@@ -26,7 +26,6 @@ public class ClientSocketSender extends AbstractClientSocket{
                 socket = new Socket(this.adr, port);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), false);
                 if(this.torque==Double.NaN){
-                    System.out.println("$$$$$$$$$$$$$$$$$NAN");
                     this.torque=0.0;
                 }
                     out.print("@"+this.torque+"#");
