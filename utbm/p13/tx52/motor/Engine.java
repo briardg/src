@@ -8,7 +8,7 @@ public class Engine extends AbstractMotor {
 
     private double tank; //kg
     private double weightOfLiter;
-    private double consumption; //kg/kW/h
+    private double consumption; //kg/kW.h
     private double OptimalPower; //KW
     private boolean turnON=false;
 
@@ -50,5 +50,30 @@ public class Engine extends AbstractMotor {
         this.tank=this.tank-(this.consumption*this.OptimalPower/3600);
         System.out.println("update tank:"+this.tank);
     }
+    
+    /**
+     * 
+     * @param c in g/kW.h
+     * @param power in kW
+     */
+    public void updateTankWithConsumption(double c, double power){
+        this.tank=this.tank-((c/1000)*power/3600);
+    }
 
+    /**
+     * 
+     * @param torque in Nm
+     * @param AV rad/s
+     * @return 
+     */
+    public double getConsumptionFromTorqueAndAV(double torque, double AV){
+        
+        //converte AV in tr/min
+        double c=0;
+        //exe matlab code
+        
+        
+        return c;
+    }
+    
 }

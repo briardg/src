@@ -48,7 +48,7 @@ public class To52 extends TimerTask{
     }
     
     public static void main(String[] args) {
-        Timer t = new Timer("TX52");
+        Timer t = new Timer("T052");
         t.schedule(new To52(),0,1);
     }
 }

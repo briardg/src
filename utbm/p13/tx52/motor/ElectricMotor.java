@@ -7,6 +7,11 @@ package utbm.p13.tx52.motor;
  */
 public class ElectricMotor extends AbstractMotor {
 
+    //default constructor
+    public ElectricMotor(){
+        super();
+    }
+    
     //contructor with basic data
     public ElectricMotor(double wheelRadius, double surface, double aerodynamicCoefficient, double weight, double frictionCoefficient) {
         super();

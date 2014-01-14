@@ -29,7 +29,7 @@ public abstract class AbstractMotor implements IMotor {
     //calculate
     private double airResistance;
     private double floorResistance;
-    private double angularVelocity;
+    private double angularVelocity; // rad/s
     private double force; // resistence force in Newton N
     private double wheelTorque; //wheel or motor torque  N/m
     private double currentPower; //Watt

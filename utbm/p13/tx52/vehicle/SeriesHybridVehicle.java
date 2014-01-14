@@ -83,8 +83,8 @@ public class SeriesHybridVehicle extends AbstractHybridVehicle {
             this.engine.setTurnON(false);
         }
         
-        if(this.electricMotor.getCurrentPower()!=0.0)
-            this.sender.setTorque(this.electricMotor.getCurrentPower()/this.electricMotor.getAngularVelocity());
+        if(this.battery.getCurrentOutPower()!=0.0)
+            this.sender.setTorque(this.battery.getCurrentOutPower()/this.electricMotor.getAngularVelocity());
         else
             this.sender.setTorque(0.0);
             
